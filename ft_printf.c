@@ -6,10 +6,20 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/21 09:13:13 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:37:25 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
+
+static void	ft_str_to_upper(char *s)
+{
+	while (*s)
+	{
+		*s = ft_toupper(*s);
+		s++;
+	}
+	return ;
+}
 
 static void	ft_strrev(char *str)
 {
@@ -132,6 +142,31 @@ void	ft_treat_memory_address(va_list args, int *print_counter)
 	free(str_num);
 }
 
+void	ft_treat_hexadecimal_lower(va_list args, int *print_counter)
+{
+	long int    hex_num;
+	char    *str_num;
+
+	hex_num = va_arg(args, long int);
+	str_num = ft_itoa_hex(hex_num);
+	ft_putstr_fd(str_num, 1);
+	*print_counter = *print_counter + ft_strlen(str_num);
+	free(str_num);
+}
+
+void    ft_treat_hexadecimal_upper(va_list args, int *print_counter)
+{
+	long int    hex_num;
+	char    *str_num;
+
+	hex_num = va_arg(args, long int);
+	str_num = ft_itoa_hex(hex_num);
+	ft_str_to_upper(str_num);
+	ft_putstr_fd(str_num, 1);
+	*print_counter = *print_counter + ft_strlen(str_num);
+	free(str_num); 
+}
+
 PrintOption ft_get_treatment(char c)
 {
 	if (c == 'c')
@@ -144,6 +179,10 @@ PrintOption ft_get_treatment(char c)
 		return (ft_treat_decimal_int);
 	if (c == 'p')
 		return (ft_treat_memory_address);
+	if (c == 'x')
+		return (ft_treat_hexadecimal_lower);
+	if (c == 'X')
+		return (ft_treat_hexadecimal_upper);
 	return (NULL);
 }
 
@@ -212,4 +251,13 @@ int	main()
 	// Teste para imprimir endereco na memoria
 	printf("number of printed chars - system: %d\n", printf("address: %p\n", &num));
 	printf("number of printed chars - custom: %d\n", ft_printf("address: %p\n", &num));
+
+	num = 0xabcdef;
+	// Teste para imprimir hexadecimal lower case
+	printf("number of printed chars - system: %d\n", printf("address: %x\n", num));
+	printf("number of printed chars - custom: %d\n", ft_printf("address: %x\n", num));
+
+	// Teste para imprimir hexadecimal upper case
+	printf("number of printed chars - system: %d\n", printf("address: %X\n", num));
+	printf("number of printed chars - custom: %d\n", ft_printf("address: %X\n", num));
 }
