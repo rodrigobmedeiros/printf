@@ -6,18 +6,92 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/17 15:37:58 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:13:13 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_treat_char(va_list args, int *print_counter)
+static void	ft_strrev(char *str)
+{
+	int	half;
+	int	size;
+	int	i;
+	int	temp;
+
+	i = 0;
+	if (*str == '-')
+		str++;
+	size = ft_strlen(str);
+	half = size / 2;
+	while (i < half)
+	{
+		temp = str[i];
+		str[i] = str[size - i -1];
+		str[size - i - 1] = temp;
+		i++;
+	}
+}
+
+static char	char_from_int_hex(int nbr)
+{
+	char 	*hex_digits;
+
+	hex_digits = "0123456789abcdef";
+	return (hex_digits[nbr]);
+}
+
+static int	ft_add_signal_if_negative(char *num, int index)
+{
+	num[index] = '-';
+	return (-1);
+}
+
+static char	*ft_realloc(char *s)
+{
+	char	*re_s;
+
+	re_s = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!re_s)
+		return (NULL);
+	ft_strlcpy(re_s, s, ft_strlen(s) + 1);
+	free(s);
+	return (re_s);
+}
+
+static char	*ft_itoa_hex(long int n)
+{
+	int		signal;
+	int		i_num;
+	char	*num;
+
+	num = (char *)malloc(sizeof(char) * 12);
+	if (!num)
+		return (NULL);
+	signal = 1;
+	i_num = 0;
+	if (n < 0)
+		signal = ft_add_signal_if_negative(num, i_num++);
+	while (n / 16 != 0)
+	{
+		num[i_num++] = char_from_int_hex(signal * (n % 16));
+		n = n / 16;
+	}
+	num[i_num++] = char_from_int_hex(signal * (n % 16));
+	num[i_num] = '\0';
+	ft_strrev(num);
+	num = ft_realloc(num);
+	if (!num)
+		return (NULL);
+	return (num);
+}
+
+static void	ft_treat_char(va_list args, int *print_counter)
 {
 	ft_putchar_fd(va_arg(args, int), 1);
 	*print_counter = *print_counter + 1;
 }
 
-void	ft_treat_str(va_list args, int *print_counter)
+static void	ft_treat_str(va_list args, int *print_counter)
 {
 	char	*str;
 
@@ -26,16 +100,54 @@ void	ft_treat_str(va_list args, int *print_counter)
 	*print_counter = *print_counter + ft_strlen(str);
 }
 
+static void	ft_treat_percent(va_list args, int *print_counter)
+{
+	(void) args;	
+	ft_putchar_fd('%', 1);
+	*print_counter = *print_counter + 1;
+}
+
+void	ft_treat_decimal_int(va_list args, int *print_counter)
+{
+	int	int_num;
+	char	*str_num;
+	
+	int_num = va_arg(args, int);
+	str_num = ft_itoa(int_num);
+	ft_putstr_fd(str_num, 1);
+	*print_counter = *print_counter + ft_strlen(str_num);
+	free(str_num);
+}
+
+void	ft_treat_memory_address(va_list args, int *print_counter)
+{
+	long int	hex_num;
+	char	*str_num;
+
+	hex_num = va_arg(args, long int);
+	str_num = ft_itoa_hex(hex_num);
+	ft_putstr_fd("0x", 1);
+	ft_putstr_fd(str_num, 1);
+	*print_counter = *print_counter + ft_strlen(str_num) + 2;
+	free(str_num);
+}
+
 PrintOption ft_get_treatment(char c)
 {
 	if (c == 'c')
 		return (ft_treat_char);
 	if (c == 's')
 		return (ft_treat_str);
+	if (c == '%')
+		return (ft_treat_percent);
+	if (c == 'd')
+		return (ft_treat_decimal_int);
+	if (c == 'p')
+		return (ft_treat_memory_address);
 	return (NULL);
 }
 
-void	ft_define_treatment(char *str, va_list args, int *print_counter)
+void	ft_apply_treatment(char *str, va_list args, int *print_counter)
 {
 	char	*special_chars;
 	char	*special_char;
@@ -58,7 +170,7 @@ int	ft_printf(const char *format,  ...)
 		if (*str == '%')
 		{
 			str++;
-			ft_define_treatment(str++, args, &print_counter);
+			ft_apply_treatment(str++, args, &print_counter);
 		}
 		else
 		{
@@ -83,4 +195,21 @@ int	main()
  	// Teste para multiplas string
  	printf("number of printed chars - system: %d\n", printf("rodrigo - %s %s\n", "RODRIGO", "BERNARDO"));
  	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %s %s\n", "RODRIGO", "BERNARDO"));
+
+	// Teste para imprimir percentual
+ 	printf("number of printed chars - system: %d\n", printf("rodrigo - %%\n"));
+ 	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %%\n"));
+
+	// Teste para imprimir inteiros com %d
+	printf("number of printed chars - system: %d\n", printf("rodrigo - %d\n", 11));
+	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %d\n", 11));
+
+	// Teste para multiplas string
+	printf("number of printed chars - system: %d\n", printf("rodrigo - %d %d\n", 11, 123));
+	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %d %d\n", 11, 123));
+
+	int num = 10;
+	// Teste para imprimir endereco na memoria
+	printf("number of printed chars - system: %d\n", printf("address: %p\n", &num));
+	printf("number of printed chars - custom: %d\n", ft_printf("address: %p\n", &num));
 }
