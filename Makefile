@@ -13,7 +13,7 @@ LIBFT_DIR = libft
 all: $(NAME)
 
 $(NAME): ${OBJS} | gen-libft
-	ar rc ${NAME} ${OBJS} ${LIBFT_DIR}/libft.a
+	ar rc ${NAME} ${LIBFT_DIR}/libft.a ${OBJS}
 
 gen-libft:
 	make -C ${LIBFT_DIR}
