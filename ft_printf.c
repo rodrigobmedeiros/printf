@@ -6,7 +6,7 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/21 23:54:38 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/22 00:17:20 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -42,12 +42,9 @@ static void	ft_strrev(char *str)
 	}
 }
 
-static char	char_from_int_hex(int nbr)
+static char	char_from_int_base(int nbr, char *digits)
 {
-	char 	*hex_digits;
-
-	hex_digits = "0123456789abcdef";
-	return (hex_digits[nbr]);
+	return (digits[nbr]);
 }
 
 static int	ft_add_signal_if_negative(char *num, int index)
@@ -68,7 +65,7 @@ static char	*ft_realloc(char *s)
 	return (re_s);
 }
 
-static char	*ft_itoa_hex(long int n)
+static char	*ft_itoa_base(long int n, int base, char *digits)
 {
 	int		signal;
 	int		i_num;
@@ -81,12 +78,12 @@ static char	*ft_itoa_hex(long int n)
 	i_num = 0;
 	if (n < 0)
 		signal = ft_add_signal_if_negative(num, i_num++);
-	while (n / 16 != 0)
+	while (n / base != 0)
 	{
-		num[i_num++] = char_from_int_hex(signal * (n % 16));
-		n = n / 16;
+		num[i_num++] = char_from_int_base(signal * (n % base), digits);
+		n = n / base;
 	}
-	num[i_num++] = char_from_int_hex(signal * (n % 16));
+	num[i_num++] = char_from_int_base(signal * (n % base), digits);
 	num[i_num] = '\0';
 	ft_strrev(num);
 	num = ft_realloc(num);
@@ -135,7 +132,7 @@ void	ft_treat_memory_address(va_list args, int *print_counter)
 	char	*str_num;
 
 	hex_num = va_arg(args, long int);
-	str_num = ft_itoa_hex(hex_num);
+	str_num = ft_itoa_base(hex_num, 16, "0123456789abcdef");
 	ft_putstr_fd("0x", 1);
 	ft_putstr_fd(str_num, 1);
 	*print_counter = *print_counter + ft_strlen(str_num) + 2;
@@ -148,7 +145,7 @@ void	ft_treat_hexadecimal_lower(va_list args, int *print_counter)
 	char    *str_num;
 
 	hex_num = va_arg(args, long int);
-	str_num = ft_itoa_hex(hex_num);
+	str_num = ft_itoa_base(hex_num, 16, "0123456789abcdef");
 	ft_putstr_fd(str_num, 1);
 	*print_counter = *print_counter + ft_strlen(str_num);
 	free(str_num);
@@ -160,7 +157,7 @@ void    ft_treat_hexadecimal_upper(va_list args, int *print_counter)
 	char    *str_num;
 
 	hex_num = va_arg(args, long int);
-	str_num = ft_itoa_hex(hex_num);
+	str_num = ft_itoa_base(hex_num, 16, "0123456789abcdef");
 	ft_str_to_upper(str_num);
 	ft_putstr_fd(str_num, 1);
 	*print_counter = *print_counter + ft_strlen(str_num);
