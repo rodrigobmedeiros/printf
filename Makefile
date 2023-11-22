@@ -1,7 +1,8 @@
 NAME = libftprintf.a
 
 SRCS = \
-	ft_printf.c
+	ft_printf.c\
+	ft_itoa_base.c
 
 FLAGS = -Wall -Wextra -Werror
 
@@ -11,10 +12,10 @@ LIBFT_DIR = libft
 
 all: $(NAME)
 
-$(NAME): ${OBJS} libft/libft.a
+$(NAME): ${OBJS} | gen-libft
 	ar rc ${NAME} ${OBJS} ${LIBFT_DIR}/libft.a
 
-libft/libft.a:
+gen-libft:
 	make -C ${LIBFT_DIR}
 
 .c.o:

@@ -6,7 +6,7 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/22 00:21:48 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/22 11:23:34 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -43,7 +43,7 @@ static void	ft_treat_percent(va_list args, int *print_counter)
 	*print_counter = *print_counter + 1;
 }
 
-void	ft_treat_decimal_int(va_list args, int *print_counter)
+static void	ft_treat_decimal_int(va_list args, int *print_counter)
 {
 	int	int_num;
 	char	*str_num;
@@ -55,7 +55,7 @@ void	ft_treat_decimal_int(va_list args, int *print_counter)
 	free(str_num);
 }
 
-void	ft_treat_memory_address(va_list args, int *print_counter)
+static void	ft_treat_memory_address(va_list args, int *print_counter)
 {
 	long int	hex_num;
 	char	*str_num;
@@ -68,7 +68,7 @@ void	ft_treat_memory_address(va_list args, int *print_counter)
 	free(str_num);
 }
 
-void	ft_treat_hexadecimal_lower(va_list args, int *print_counter)
+static void	ft_treat_hexadecimal_lower(va_list args, int *print_counter)
 {
 	long int    hex_num;
 	char    *str_num;
@@ -80,7 +80,7 @@ void	ft_treat_hexadecimal_lower(va_list args, int *print_counter)
 	free(str_num);
 }
 
-void    ft_treat_hexadecimal_upper(va_list args, int *print_counter)
+static void    ft_treat_hexadecimal_upper(va_list args, int *print_counter)
 {
 	long int    hex_num;
 	char    *str_num;
@@ -93,7 +93,7 @@ void    ft_treat_hexadecimal_upper(va_list args, int *print_counter)
 	free(str_num); 
 }
 
-PrintOption ft_get_treatment(char c)
+static PrintOption ft_get_treatment(char c)
 {
 	if (c == 'c')
 		return (ft_treat_char);
@@ -116,7 +116,7 @@ PrintOption ft_get_treatment(char c)
 	return (NULL);
 }
 
-void	ft_apply_treatment(char *str, va_list args, int *print_counter)
+static void	ft_apply_treatment(char *str, va_list args, int *print_counter)
 {
 	char	*special_chars;
 	char	*special_char;
@@ -172,7 +172,6 @@ int	main()
 	// Teste para imprimir inteiros com %d
 	printf("number of printed chars - system: %d\n", printf("rodrigo - %d\n", 11));
 	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %d\n", 11));
-
 	// Teste para imprimir multiplos inteiros com %d
 	printf("number of printed chars - system: %d\n", printf("rodrigo - %d %d\n", 11, 123));
 	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %d %d\n", 11, 123));
