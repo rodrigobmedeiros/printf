@@ -6,7 +6,7 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/22 11:23:34 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:06:56 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -131,7 +131,9 @@ int	ft_printf(const char *format,  ...)
 	va_list	args;
 	int	print_counter;
 	char	*str;
-
+	
+	if (format == NULL)
+		return (-1);
 	va_start(args, format);
 	str = (char *)format;
 	print_counter = 0;
@@ -150,9 +152,25 @@ int	ft_printf(const char *format,  ...)
 	return (print_counter);
 }
 
-#include <stdio.h>
+/*#include <stdio.h>
 int	main()
 {
+        // Teste with input "(NULL)" without other parameters
+        ft_printf("Teste with input \"(NULL)\"\n");
+        printf("number of printed chars - system: %d\n", printf((NULL)));
+        printf("number of printed chars - custom: %d\n", ft_printf((NULL)));
+        ft_printf("\n");
+
+	// Teste with input "(NULL)" and char0
+        ft_printf("Teste with input \"(NULL)\" and (char)0\n");
+        printf("number of printed chars - system: %d\n", printf((NULL), (char)0));
+        printf("number of printed chars - custom: %d\n", ft_printf((NULL), (char)0));
+        ft_printf("\n");
+	// Teste c null
+	ft_printf("Teste com c e input nulo (char)0\n");
+        printf("number of printed chars - system: %d\n", printf("rodrigo%c bernardo\n", (char)0));
+        printf("number of printed chars - custom: %d\n", ft_printf("rodrigo%c bernardo\n", (char)0));
+	ft_printf("\n");
 	// Teste para multiplos caracteres
 	printf("number of printed chars - system: %d\n", printf("rodrigo%c - %c\n", 'A', 'B'));
 	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo%c - %c\n", 'A', 'B'));
@@ -205,4 +223,4 @@ int	main()
         // Teste para imprimir multiplos inteiros com %i
         printf("number of printed chars - system: %d\n", printf("rodrigo - %u %u\n", 11, 123));
         printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %u %u\n", 11, 123));
-}
+}*/
