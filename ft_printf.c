@@ -6,7 +6,7 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/21 09:37:25 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/21 23:54:38 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -183,6 +183,10 @@ PrintOption ft_get_treatment(char c)
 		return (ft_treat_hexadecimal_lower);
 	if (c == 'X')
 		return (ft_treat_hexadecimal_upper);
+	if (c == 'i')
+		return (ft_treat_decimal_int);
+	if (c == 'u')
+		return (ft_treat_decimal_int);
 	return (NULL);
 }
 
@@ -243,7 +247,7 @@ int	main()
 	printf("number of printed chars - system: %d\n", printf("rodrigo - %d\n", 11));
 	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %d\n", 11));
 
-	// Teste para multiplas string
+	// Teste para imprimir multiplos inteiros com %d
 	printf("number of printed chars - system: %d\n", printf("rodrigo - %d %d\n", 11, 123));
 	printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %d %d\n", 11, 123));
 
@@ -260,4 +264,20 @@ int	main()
 	// Teste para imprimir hexadecimal upper case
 	printf("number of printed chars - system: %d\n", printf("address: %X\n", num));
 	printf("number of printed chars - custom: %d\n", ft_printf("address: %X\n", num));
+
+        // Teste para imprimir inteiros com %i
+        printf("number of printed chars - system: %d\n", printf("rodrigo - %i\n", 11));
+        printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %i\n", 11));
+
+        // Teste para imprimir multiplos inteiros com %i
+        printf("number of printed chars - system: %d\n", printf("rodrigo - %i %i\n", 11, 123));
+        printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %i %i\n", 11, 123));
+
+        // Teste para imprimir inteiros com %u
+        printf("number of printed chars - system: %d\n", printf("rodrigo - %u\n", 11));
+        printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %u\n", 11));
+
+        // Teste para imprimir multiplos inteiros com %i
+        printf("number of printed chars - system: %d\n", printf("rodrigo - %u %u\n", 11, 123));
+        printf("number of printed chars - custom: %d\n", ft_printf("rodrigo - %u %u\n", 11, 123));
 }
