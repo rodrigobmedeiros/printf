@@ -6,7 +6,7 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/22 15:06:56 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/22 16:56:58 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -93,7 +93,7 @@ static void    ft_treat_hexadecimal_upper(va_list args, int *print_counter)
 	free(str_num); 
 }
 
-static PrintOption ft_get_treatment(char c)
+static t_PrintOption ft_get_treatment(char c)
 {
 	if (c == 'c')
 		return (ft_treat_char);
@@ -132,7 +132,7 @@ int	ft_printf(const char *format,  ...)
 	int	print_counter;
 	char	*str;
 	
-	if (format == NULL)
+	if (!format)
 		return (-1);
 	va_start(args, format);
 	str = (char *)format;
