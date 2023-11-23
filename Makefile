@@ -8,25 +8,27 @@ FLAGS = -Wall -Wextra -Werror
 
 OBJS = ${SRCS:.c=.o}
 
-LIBFT_DIR = libft
+LIBFT_PATH = ./libft
+LIBFT = $(LIBFT_PATH)/libft.a
 
 all: $(NAME)
 
-$(NAME): ${OBJS} | gen-libft
-	ar rc ${NAME} ${LIBFT_DIR}/libft.a ${OBJS}
+$(NAME): $(LIBFT) $(OBJS)
+	cp $(LIBFT) $(NAME)
+	ar rcs $(NAME) $(OBJS)
 
-gen-libft:
-	make -C ${LIBFT_DIR}
+$(LIBFT):
+	make -C $(LIBFT_PATH) all
 
 .c.o:
-	cc ${FLAGS} -c -o $@ $<
+	cc $(FLAGS) -c -o $@ $<
 
 clean:
-	rm -f ${OBJS}
-	make -C ${LIBFT_DIR} clean
+	rm -f $(OBJS)
+	make -C $(LIBFT_PATH) clean
 
-fclean:
-	rm -f ${NAME}
-	make -C ${LIBFT_DIR} fclean
+fclean: clean
+	rm -f $(NAME)
+	make -C $(LIBFT_PATH) fclean
 
 re: clean fclean all
