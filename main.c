@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <limits.h>
+#include "ft_printf.h"
+
 int     main()
 {
         // Teste com argumento nulo para strings

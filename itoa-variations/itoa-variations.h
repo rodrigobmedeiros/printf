@@ -6,7 +6,7 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:23:32 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/27 22:17:17 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 08:28:48 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef ITOA_VARIATIONS_H

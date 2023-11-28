@@ -6,7 +6,7 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 19:14:08 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/26 19:46:09 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 07:48:29 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printer-factory.h"

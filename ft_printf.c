@@ -6,12 +6,12 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/26 19:51:44 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 07:48:56 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static t_PrintOption ft_get_treatment(char c)
+static t_PrinterOption ft_get_treatment(char c)
 {
 	if (c == 'c')
 		return (ft_treat_char);
