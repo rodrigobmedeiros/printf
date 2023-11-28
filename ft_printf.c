@@ -6,12 +6,12 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:49:54 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/28 07:48:56 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:13:02 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static t_PrinterOption ft_get_treatment(char c)
+static t_PrinterOption	ft_get_treatment(char c)
 {
 	if (c == 'c')
 		return (ft_treat_char);
@@ -38,24 +38,25 @@ static void	ft_apply_treatment(char *str, va_list args, int *print_counter)
 {
 	char	*special_chars;
 	char	*special_char;
-	
+
 	special_chars = "cspdiuxX%";
 	special_char = ft_memchr(special_chars, *str, ft_strlen(special_chars));
 	ft_get_treatment(*special_char)(args, print_counter);
 }
 
-int	ft_printf(const char *format,  ...)
+int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int	print_counter;
+	int		print_counter;
 	char	*str;
-	
+
 	if (!format)
 		return (-1);
 	va_start(args, format);
 	str = (char *)format;
 	print_counter = 0;
 	while (*str)
+	{
 		if (*str == '%')
 		{
 			str++;
@@ -66,6 +67,7 @@ int	ft_printf(const char *format,  ...)
 			ft_putchar_fd(*str++, 1);
 			print_counter++;
 		}
+	}
 	va_end(args);
 	return (print_counter);
 }

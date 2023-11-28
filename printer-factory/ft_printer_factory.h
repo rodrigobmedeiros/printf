@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printer-factory.h                                  :+:      :+:    :+:   */
+/*   ft_printer_factory.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:23:32 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/28 08:09:33 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:04:50 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef PRINTER_FACTORY_H
-# define PRINTER_FACTORY_H
+#ifndef FT_PRINTER_FACTORY_H
+# define FT_PRINTER_FACTORY_H
 # include <stdarg.h>
-# include "../itoa-variations/itoa-variations.h"
+# include "../itoa-variations/ft_itoa_variations.h"
 
 typedef void	(*t_PrinterOption)(va_list, int *);
 void	ft_treat_char(va_list args, int *print_counter);

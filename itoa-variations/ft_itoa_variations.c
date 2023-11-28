@@ -6,54 +6,10 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 00:19:24 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/28 09:38:00 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:06:37 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "itoa-variations.h"
-
-static void	ft_strrev(char *str)
-{
-	int	half;
-	int	size;
-	int	i;
-	int	temp;
-
-	i = 0;
-	if (*str == '-')
-		str++;
-	size = ft_strlen(str);
-	half = size / 2;
-	while (i < half)
-	{
-		temp = str[i];
-		str[i] = str[size - i -1];
-		str[size - i - 1] = temp;
-		i++;
-	}
-}
-
-static char	char_from_int_base(int nbr, char *digits)
-{
-	return (digits[nbr]);
-}
-
-static int	ft_add_signal_if_negative(char *num, int index)
-{
-	num[index] = '-';
-	return (-1);
-}
-
-static char	*ft_realloc(char *s)
-{
-	char	*re_s;
-
-	re_s = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!re_s)
-		return (NULL);
-	ft_strlcpy(re_s, s, ft_strlen(s) + 1);
-	free(s);
-	return (re_s);
-}
+#include "ft_itoa_variations.h"
 
 char	*ft_itoa_base(long n, int base, char *digits)
 {
@@ -82,48 +38,48 @@ char	*ft_itoa_base(long n, int base, char *digits)
 	return (num);
 }
 
-char    *ft_itoa_address(unsigned long n, int base, char *digits)
+char	*ft_itoa_address(unsigned long n, int base, char *digits)
 {
-        int             i_num;
-        char    *num;
+	int		i_num;
+	char	*num;
 
-        num = (char *)malloc(sizeof(char) * 50);
-        if (!num)
-                return (NULL);
-        i_num = 0;
-        while (n / base != 0)
-        {
-                num[i_num++] = char_from_int_base((n % base), digits);
-                n = n / base;
-        }
-        num[i_num++] = char_from_int_base((n % base), digits);
-        num[i_num] = '\0';
-        ft_strrev(num);
-        num = ft_realloc(num);
-        if (!num)
-                return (NULL);
-        return (num);
+	num = (char *)malloc(sizeof(char) * 50);
+	if (!num)
+		return (NULL);
+	i_num = 0;
+	while (n / base != 0)
+	{
+		num[i_num++] = char_from_int_base((n % base), digits);
+		n = n / base;
+	}
+	num[i_num++] = char_from_int_base((n % base), digits);
+	num[i_num] = '\0';
+	ft_strrev(num);
+	num = ft_realloc(num);
+	if (!num)
+		return (NULL);
+	return (num);
 }
 
 char	*ft_itoa_unsigned_decimal(unsigned int n, int base, char *digits)
 {
-        int             i_num;
-        char    *num;
+	int		i_num;
+	char	*num;
 
-        num = (char *)malloc(sizeof(char) * 24);
-        if (!num)
-                return (NULL);
-        i_num = 0;
-        while (n / base != 0)
-        {
-                num[i_num++] = char_from_int_base((n % base), digits);
-                n = n / base;
-        }
-        num[i_num++] = char_from_int_base((n % base), digits);
-        num[i_num] = '\0';
-        ft_strrev(num);
-        num = ft_realloc(num);
-        if (!num)
-                return (NULL);
-        return (num);
+	num = (char *)malloc(sizeof(char) * 24);
+	if (!num)
+		return (NULL);
+	i_num = 0;
+	while (n / base != 0)
+	{
+		num[i_num++] = char_from_int_base((n % base), digits);
+		n = n / base;
+	}
+	num[i_num++] = char_from_int_base((n % base), digits);
+	num[i_num] = '\0';
+	ft_strrev(num);
+	num = ft_realloc(num);
+	if (!num)
+		return (NULL);
+	return (num);
 }

@@ -6,12 +6,12 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 19:27:34 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/26 19:51:26 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:02:30 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printer-factory.h"
+#include "ft_printer_factory.h"
 
-static int	ft_error_nil()
+static int	ft_error_nil(void)
 {
 	ft_putstr_fd("(nil)", 1);
 	return (5);
@@ -20,8 +20,8 @@ static int	ft_error_nil()
 void	ft_treat_memory_address(va_list args, int *print_counter)
 {
 	unsigned long	hex_num;
-	char	*str_num;
-	char	*cpy_to_free;
+	char			*str_num;
+	char			*cpy_to_free;
 
 	hex_num = va_arg(args, unsigned long);
 	if (!hex_num)

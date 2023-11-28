@@ -6,6 +6,7 @@ PRINTER_FACTORY_PATH = ./printer-factory
 SRCS = \
 	ft_printf.c\
 	$(ITOA_VARIATIONS_PATH)/ft_itoa_variations.c\
+	$(ITOA_VARIATIONS_PATH)/ft_itoa_utils.c\
 	$(PRINTER_FACTORY_PATH)/ft_treat_char.c\
 	$(PRINTER_FACTORY_PATH)/ft_treat_str.c\
 	$(PRINTER_FACTORY_PATH)/ft_treat_decimal_int.c\

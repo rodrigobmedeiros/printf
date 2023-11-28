@@ -6,17 +6,16 @@
 /*   By: robernar <robernar@student.42.rj>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 19:17:17 by robernar          #+#    #+#             */
-/*   Updated: 2023/11/26 19:50:13 by robernar         ###   ########.fr       */
+/*   Updated: 2023/11/28 19:03:00 by robernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printer-factory.h"
+#include "ft_printer_factory.h"
 
-static int	ft_error_null()
+static int	ft_error_null(void)
 {
 	ft_putstr_fd("(null)", 1);
 	return (6);
 }
-
 
 void	ft_treat_str(va_list args, int *print_counter)
 {
